@@ -67,6 +67,17 @@ ORDER BY a.SALARY DESC;
 
 */
 
+SELECT
+    D.DEPT_TITLE AS 부서명
+    , COUNT(*) AS 인원
+    , SUM(E.salary) AS 급여합계
+    , AVG(E.salary) AS 급여평균
+    FROM employee E
+        JOIN DEPARTMENT D ON e.dept_code = d.dept_id
+    WHERE E.quit_yn <> 'y'
+    GROUP BY D.DEPT_TITLE
+    WITH ROLLUP;
+
 
 -- 4. 전체 직원의 사원명, 주민등록번호, 전화번호, 부서명, 직급명을 출력하세요.
 --    단, 입사일을 기준으로 오름차순 정렬되도록 출력하세요.
@@ -86,6 +97,18 @@ ORDER BY a.SALARY DESC;
     ...
     총 row 수는 24
 */
+SELECT
+    e.emp_name 사원명
+    , e.emp_no 주민등록번호
+    , e.phone 전화번호
+    , d.dept_title 부서명
+    , j.job_name 직급명
+    FROM employee e
+        LEFT JOIN empdb.department d ON d.dept_id = e.dept_code
+        JOIN job j ON e.job_code = j.job_code
+
+    ORDER BY e.hire_date;
+
 
 -- 5. 2020년 12월 25일이 무슨 요일인지 조회하시오.(Join아님)
 
@@ -95,6 +118,7 @@ ORDER BY a.SALARY DESC;
     ---------------------------
     Friday
 */
+
 
 -- 6. 주민번호가 70년대 생이면서 성별이 여자이고,
 --    성이 전씨인 직원들의 사원명, 주민번호, 부서명, 직급명을 조회하시오.
@@ -107,6 +131,7 @@ ORDER BY a.SALARY DESC;
 */
 
 
+
 -- 7. 이름에 '형'자가 들어가는 직원들의 사번, 사원명, 직급명을 조회하시오.
 
 /*
@@ -115,6 +140,7 @@ ORDER BY a.SALARY DESC;
     -----------------------------------------------------
     211        전형돈    대리
 */
+
 
 -- 8. 해외영업팀에 근무하는 사원명, 직급명, 부서코드, 부서명을 조회하시오.
 /*
