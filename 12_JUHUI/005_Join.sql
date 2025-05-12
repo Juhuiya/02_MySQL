@@ -118,6 +118,8 @@ SELECT
     ---------------------------
     Friday
 */
+    SELECT
+        DATE_FORMAT(CAST('20201225' AS DATE), '%W') 요일;
 
 
 -- 6. 주민번호가 70년대 생이면서 성별이 여자이고,
@@ -129,6 +131,18 @@ SELECT
     ---------------------------------------------------------
     전지연         770808-2665412       인사관리부    대리
 */
+    SELECT
+        E.emp_name 사원명
+        , E.emp_no 주민번호
+        , D.dept_title 부서명
+        , J. job_name 직급명
+        FROM employee E
+            JOIN department D ON (E.dept_code = D.dept_id)
+            JOIN job J ON (E.job_code = J.job_code)
+        WHERE SUBSTRING(E.emp_no, 1,2) >= 70
+        AND SUBSTRING(E.emp_no, 1,2) < 80
+        AND SUBSTRING(E.emp_no, 8,1) = 2
+        AND E.EMP_NAME LIKE '전%';
 
 
 
@@ -140,7 +154,12 @@ SELECT
     -----------------------------------------------------
     211        전형돈    대리
 */
-
+    SELECT
+        E.emp_id 사번
+        , E.emp_name 사원명
+        , J.job_name 직급명
+        FROM employee E JOIN JOB J ON(E.JOB_CODE = J.JOB_CODE)
+        WHERE E.EMP_NAME LIKE '%형%';
 
 -- 8. 해외영업팀에 근무하는 사원명, 직급명, 부서코드, 부서명을 조회하시오.
 /*
@@ -158,6 +177,16 @@ SELECT
     정중하     부장        D6             해외영업2부
 
 */
+    SELECT
+        E.emp_name 사원명
+        , J.job_name 직급명
+        , E.dept_code 부서코드
+        , D.dept_title 부서명
+
+        FROM employee E
+            JOIN job J ON(E.job_code = J.job_code)
+            JOIN department D ON(E.dept_code = D.dept_id)
+        WHERE D.dept_id IN('D5', 'D6');
 
 
 
